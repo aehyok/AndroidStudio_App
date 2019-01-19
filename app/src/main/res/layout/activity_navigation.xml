@@ -22,13 +22,5 @@
         app:headerLayout="@layout/nav_header_navigation"
         app:menu="@menu/activity_navigation_drawer" />
 
-    <Button
-        android:id="@+id/buttonTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="71dp"
-        android:layout_marginStart="228dp"
-        android:layout_marginTop="134dp"
-        android:text="Button"/>
 
 </android.support.v4.widget.DrawerLayout>
