@@ -1,5 +1,6 @@
 package com.aehyok.app.aehyok;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,16 +14,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
+
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    private int REQUEST_CODE = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        ZXingLibrary.initDisplayOpinion( this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +51,9 @@ public class NavigationActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Toast.makeText(NavigationActivity.this,"you click the button2",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(NavigationActivity.this, CaptureActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
+
             }
         });
     }

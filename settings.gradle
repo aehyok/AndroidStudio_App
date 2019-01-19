@@ -1,1 +1,1 @@
-include ':app', ':aehyok.ptmodule', ':aehyok.libray'
+include ':app', ':aehyok.ptmodule', ':aehyok.libray', ':lib-zxing'
