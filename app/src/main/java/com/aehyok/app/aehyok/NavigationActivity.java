@@ -2,8 +2,10 @@ package com.aehyok.app.aehyok;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.transition.Transition;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,12 +17,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
 
+import com.aehyok.app.aehyok.Model.Login;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
+
+import org.reactivestreams.Subscription;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private int REQUEST_CODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +71,34 @@ public class NavigationActivity extends AppCompatActivity
                 Toast.makeText(NavigationActivity.this,"you click the button2",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(NavigationActivity.this, CaptureActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
-
             }
         });
+        Button requestButton = (Button)findViewById(R.id.buttonRequest);
+        requestButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(final View view) {
+                Map<String, String> loginMap = new LinkedHashMap<>();
+                String userName = "zhaofudi";
+                String userPassport = "zhaofudi";
+                loginMap.put("LoginName", userName);
+                loginMap.put("LoginPassword", userPassport);
+
+                Call<Login> theObservable=  Net.serviceProvider().getLogin( loginMap );
+                theObservable.enqueue( new Callback<Login>() {
+                    @Override
+                    public void onResponse(Call<Login> call, Response<Login> response) {
+                        Snackbar.make(view, response.body().getMessage(), Snackbar.LENGTH_LONG)
+                               .setAction("Action", null).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Login> call, Throwable t) {
+                        System.out.println("连接失败");
+                    }
+                } );
+            }
+        });
+
     }
 
     @Override

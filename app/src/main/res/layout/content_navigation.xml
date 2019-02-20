@@ -15,4 +15,12 @@
         android:layout_marginStart="228dp"
         android:layout_marginTop="134dp"
         android:text="Button"/>
+
+    <Button
+        android:id="@+id/buttonRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Request"
+        app:layout_constraintLeft_toRightOf="@+id/buttonTest"
+        app:layout_constraintRight_toRightOf="parent" />
 </android.support.constraint.ConstraintLayout>
